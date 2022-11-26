@@ -1,707 +1,645 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "contact": {}
-    },
-    "paths": {
-        "/auth/customer-login": {
-            "post": {
-                "description": "Customer login endpoint",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customers"
-                ],
-                "operationId": "customer-login",
-                "parameters": [
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.CustomerLoginRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.CustomerLoginResponse"
-                        }
-                    }
-                }
+  "swagger": "2.0",
+  "info": {
+    "contact": {}
+  },
+  "paths": {
+    "/auth/customer-login": {
+      "post": {
+        "description": "Customer login endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["customers"],
+        "operationId": "customer-login",
+        "parameters": [
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.CustomerLoginRequest"
             }
-        },
-        "/auth/customer-register": {
-            "post": {
-                "description": "Customer register endpoint",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "customers"
-                ],
-                "operationId": "customer-register",
-                "parameters": [
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.CustomerRegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/dto.CustomerRegisterResponse"
-                        }
-                    }
-                }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/dto.CustomerLoginResponse"
             }
-        },
-        "/auth/restaurant-login": {
-            "post": {
-                "description": "Restaurant Login endpoint",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "restaurants"
-                ],
-                "operationId": "restaurant-login",
-                "parameters": [
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.RestaurantLoginRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.RestaurantLoginResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/restaurant-register": {
-            "post": {
-                "description": "Restaurant register endpoint",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "restaurants"
-                ],
-                "operationId": "restaurant-register",
-                "parameters": [
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.RestaurantRegisterRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/dto.RestaurantRegisterResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/menu": {
-            "get": {
-                "description": "Get all menu data endpoint",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "menus"
-                ],
-                "operationId": "get-menus",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/entity.Menu"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "This is used by restaurants to add a menu data for them",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "menus"
-                ],
-                "operationId": "create-menu",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the restaurant token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.CreateMenuRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/dto.CreateMenuResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/menu/my-menus": {
-            "get": {
-                "description": "This is used by restaurants to get all of their menu data",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "menus"
-                ],
-                "operationId": "get-menu-by-restaurant-serial",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the restaurant token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/dto.GetMenusByRestaurantSerialResponse"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/order": {
-            "post": {
-                "description": "This is used by customers to create their order data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "operationId": "create-order",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the customer token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/dto.CreateOrderRequest"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/dto.CreateOrderResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/order/customer/history": {
-            "get": {
-                "description": "This is used by customers to get their order history data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "operationId": "get-customer-order-history",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the customer token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/order_repository.OrderHistory"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/order/purchase": {
-            "put": {
-                "description": "This is used by customers to purchase their order data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "operationId": "purchase-orders",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the customer token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "request body json",
-                        "name": "RequestBody",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.PurchaseOrderRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/dto.PurchaseOrderResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/order/restaurant/history": {
-            "get": {
-                "description": "This is used by restaurants to get their purchase history data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "orders"
-                ],
-                "operationId": "get-restaurant-purchase-history-by-month-and-year",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "default": "Bearer \u003cAdd access token here\u003e",
-                        "description": "Insert the restaurant token here",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "month query",
-                        "name": "month",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "year query",
-                        "name": "year",
-                        "in": "query",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/dto.PurchaseHistoryResponse"
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
     },
-    "definitions": {
-        "dto.CreateMenuRequest": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "integer"
-                },
-                "stock": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                }
+    "/auth/customer-register": {
+      "post": {
+        "description": "Customer register endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["customers"],
+        "operationId": "customer-register",
+        "parameters": [
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.CustomerRegisterRequest"
             }
-        },
-        "dto.CreateMenuResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/dto.CustomerRegisterResponse"
             }
-        },
-        "dto.CreateOrderRequest": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "integer"
-                },
-                "menuSerial": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CreateOrderResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CustomerLoginRequest": {
-            "type": "object",
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CustomerLoginResponse": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CustomerRegisterRequest": {
-            "type": "object",
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.CustomerRegisterResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.GetMenusByRestaurantSerialResponse": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "menuSerial": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "integer"
-                },
-                "stock": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.PurchaseHistoryResponse": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "integer"
-                },
-                "cartSerial": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "type": "string"
-                },
-                "customerName": {
-                    "type": "string"
-                },
-                "menuName": {
-                    "type": "string"
-                },
-                "menuSerial": {
-                    "type": "string"
-                },
-                "orderSerial": {
-                    "type": "string"
-                },
-                "restaurantSerial": {
-                    "type": "string"
-                },
-                "totalPrice": {
-                    "type": "integer"
-                }
-            }
-        },
-        "dto.PurchaseOrderRequest": {
-            "type": "object",
-            "properties": {
-                "orderSerial": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.PurchaseOrderResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.RestaurantLoginRequest": {
-            "type": "object",
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.RestaurantLoginResponse": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.RestaurantRegisterRequest": {
-            "type": "object",
-            "properties": {
-                "address": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "dto.RestaurantRegisterResponse": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "entity.Cart": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "integer"
-                },
-                "cartSerial": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "type": "string"
-                },
-                "menuSerial": {
-                    "type": "string"
-                },
-                "orderSerial": {
-                    "type": "string"
-                },
-                "totalPrice": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "entity.Menu": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "menuSerial": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "integer"
-                },
-                "restaurantSerial": {
-                    "type": "string"
-                },
-                "stock": {
-                    "type": "integer"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "entity.Order": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "customerSerial": {
-                    "type": "string"
-                },
-                "orderSerial": {
-                    "type": "string"
-                },
-                "orderStatus": {
-                    "type": "string"
-                },
-                "restaurantSerial": {
-                    "type": "string"
-                },
-                "totalPrice": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "order_repository.OrderHistory": {
-            "type": "object",
-            "properties": {
-                "carts": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/entity.Cart"
-                    }
-                },
-                "order": {
-                    "$ref": "#/definitions/entity.Order"
-                }
-            }
+          }
         }
+      }
+    },
+    "/auth/restaurant-login": {
+      "post": {
+        "description": "Restaurant Login endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["restaurants"],
+        "operationId": "restaurant-login",
+        "parameters": [
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.RestaurantLoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/dto.RestaurantLoginResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/restaurant-register": {
+      "post": {
+        "description": "Restaurant register endpoint",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["restaurants"],
+        "operationId": "restaurant-register",
+        "parameters": [
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.RestaurantRegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/dto.RestaurantRegisterResponse"
+            }
+          }
+        }
+      }
+    },
+    "/menu": {
+      "get": {
+        "description": "Get all menu data endpoint",
+        "produces": ["application/json"],
+        "tags": ["menus"],
+        "operationId": "get-menus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/entity.Menu"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "This is used by restaurants to add a menu data for them",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["menus"],
+        "operationId": "create-menu",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the restaurant token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.CreateMenuRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/dto.CreateMenuResponse"
+            }
+          }
+        }
+      }
+    },
+    "/menu/my-menus": {
+      "get": {
+        "description": "This is used by restaurants to get all of their menu data",
+        "produces": ["application/json"],
+        "tags": ["menus"],
+        "operationId": "get-menu-by-restaurant-serial",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the restaurant token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/dto.GetMenusByRestaurantSerialResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "description": "This is used by customers to create their order data",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "operationId": "create-order",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the customer token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/dto.CreateOrderRequest"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/dto.CreateOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "/order/customer/history": {
+      "get": {
+        "description": "This is used by customers to get their order history data",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "operationId": "get-customer-order-history",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the customer token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/order_repository.OrderHistory"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/purchase": {
+      "put": {
+        "description": "This is used by customers to purchase their order data",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "operationId": "purchase-orders",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the customer token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "request body json",
+            "name": "RequestBody",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/dto.PurchaseOrderRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/dto.PurchaseOrderResponse"
+            }
+          }
+        }
+      }
+    },
+    "/order/restaurant/history": {
+      "get": {
+        "description": "This is used by restaurants to get their purchase history data",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "operationId": "get-restaurant-purchase-history-by-month-and-year",
+        "parameters": [
+          {
+            "type": "string",
+            "default": "Bearer \u003cAdd access token here\u003e",
+            "description": "Insert the restaurant token here",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "month query",
+            "name": "month",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "year query",
+            "name": "year",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/dto.PurchaseHistoryResponse"
+              }
+            }
+          }
+        }
+      }
     }
+  },
+  "definitions": {
+    "dto.CreateMenuRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "stock": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CreateMenuResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CreateOrderRequest": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "menuSerial": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CreateOrderResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CustomerLoginRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CustomerLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CustomerRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.CustomerRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.GetMenusByRestaurantSerialResponse": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "menuSerial": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "stock": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.PurchaseHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "cartSerial": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "customerName": {
+          "type": "string"
+        },
+        "menuName": {
+          "type": "string"
+        },
+        "menuSerial": {
+          "type": "string"
+        },
+        "orderSerial": {
+          "type": "string"
+        },
+        "restaurantSerial": {
+          "type": "string"
+        },
+        "totalPrice": {
+          "type": "integer"
+        }
+      }
+    },
+    "dto.PurchaseOrderRequest": {
+      "type": "object",
+      "properties": {
+        "orderSerial": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.PurchaseOrderResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.RestaurantLoginRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.RestaurantLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.RestaurantRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "dto.RestaurantRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "entity.Cart": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "cartSerial": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "menuSerial": {
+          "type": "string"
+        },
+        "orderSerial": {
+          "type": "string"
+        },
+        "totalPrice": {
+          "type": "integer"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "entity.Menu": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "menuSerial": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "restaurantSerial": {
+          "type": "string"
+        },
+        "stock": {
+          "type": "integer"
+        },
+        "type": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "entity.Order": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string"
+        },
+        "customerSerial": {
+          "type": "string"
+        },
+        "orderSerial": {
+          "type": "string"
+        },
+        "orderStatus": {
+          "type": "string"
+        },
+        "restaurantSerial": {
+          "type": "string"
+        },
+        "totalPrice": {
+          "type": "integer"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "order_repository.OrderHistory": {
+      "type": "object",
+      "properties": {
+        "carts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/entity.Cart"
+          }
+        },
+        "order": {
+          "$ref": "#/definitions/entity.Order"
+        }
+      }
+    }
+  }
 }

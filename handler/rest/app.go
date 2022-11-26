@@ -72,6 +72,7 @@ func StartApp() {
 		authRoute.POST("/restaurant-login", authHandler.RestaurantLogin)
 	}
 
+	
 	menuRoute := route.Group("/menu")
 	{	
 		menuRoute.POST("/", authService.RestaurantAuthentication(), menuHandler.CreateMenu)
