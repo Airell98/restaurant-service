@@ -40,7 +40,7 @@ create a postgres database on your local system
 
 create a .env file and please do kindly follow all the fields that have been given on the .env.example file
 
-once you have follow all the fields for your .env file, fill in the values according to you own config
+once you have follow all the fields for your .env file, fill in the values according to your own config
 
 to run the app, run this command => `make server`
 
