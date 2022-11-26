@@ -1,14 +1,9 @@
 # Restaurant Service
 
-Diagram Link: https://app.diagrams.net/#G1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP
-
-```
-
 # Diagram Link
 
 ```
 https://app.diagrams.net/#G1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP
-
 ```
 
 # Stacks/Packages
@@ -26,7 +21,7 @@ bcrypt: This package is used to encrypt all user passwords
 # Steps To Run This Project
 
 ```
-Clone the repos
+Clone the repo
 
 run cd restaurant-service
 
