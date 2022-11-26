@@ -62,5 +62,5 @@ func StartApp() {
 		orderRoute.GET("/history", authService.CustomerAuthentication(), orderHandler.GetCustomerOrderHistory)
 	}
 
-	route.Run(port)
+	route.Run(":" + port)
 }
