@@ -22,6 +22,8 @@ JWT: This package is used to authenticate all the users on this app
 
 bcrypt: This package is used to encrypt all user passwords
 
+swagger: This package is used to create the API Docs
+
 ```
 
 
@@ -34,7 +36,7 @@ run cd restaurant-service
 
 run go mod tidy
 
-create a postgres database
+create a postgres database on your local system
 
 create a .env file and please do kindly follow all the fields that have been given on the .env.example file
 
