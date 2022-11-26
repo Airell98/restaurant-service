@@ -3,6 +3,7 @@ package entity
 import (
 	"errors"
 	"fmt"
+	"os"
 	"restaurant-service/pkg/errs"
 	"strings"
 	"time"
@@ -59,7 +60,7 @@ func (r *Restaurant) claimsForAccessToken() jwt.MapClaims {
 
 func (u *Restaurant) signToken(claims jwt.MapClaims) string {
 	parseToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, _ := parseToken.SignedString([]byte(secret_key))
+	signedToken, _ := parseToken.SignedString([]byte(os.Getenv("SECRET_KEY")))
 
 	return signedToken
 }
@@ -76,7 +77,7 @@ func (r *Restaurant) ParseToken(stringToken string) (*jwt.Token, error) {
 			return nil, errors.New("invalid token");
 		}
 
-		return []byte(secret_key), nil
+		return []byte(os.Getenv("SECRET_KEY")), nil
 	})
 
 	if err != nil {

@@ -11,4 +11,5 @@ type MenuRepository interface {
 	CreateMenu(menu *entity.Menu) errs.MessageErr
 	GetMenuBySerial(serial string)(*entity.Menu, errs.MessageErr)
 	GetMenusByRestaurantSerial(serial string) ([]*entity.Menu, errs.MessageErr)
+	GetMenus() ([]*entity.Menu, errs.MessageErr)
 }

@@ -1,0 +1,461 @@
+definitions:
+  dto.CreateMenuRequest:
+    properties:
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+      type:
+        type: string
+    type: object
+  dto.CreateMenuResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.CreateOrderRequest:
+    properties:
+      amount:
+        type: integer
+      menuSerial:
+        type: string
+    type: object
+  dto.CreateOrderResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.CustomerLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.CustomerLoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.CustomerRegisterRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.CustomerRegisterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.GetMenusByRestaurantSerialResponse:
+    properties:
+      createdAt:
+        type: string
+      menuSerial:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      stock:
+        type: integer
+      type:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.PurchaseHistoryResponse:
+    properties:
+      amount:
+        type: integer
+      cartSerial:
+        type: string
+      createdAt:
+        type: string
+      customerName:
+        type: string
+      menuName:
+        type: string
+      menuSerial:
+        type: string
+      orderSerial:
+        type: string
+      restaurantSerial:
+        type: string
+      totalPrice:
+        type: integer
+    type: object
+  dto.PurchaseOrderRequest:
+    properties:
+      orderSerial:
+        type: string
+    type: object
+  dto.PurchaseOrderResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.RestaurantLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.RestaurantLoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  dto.RestaurantRegisterRequest:
+    properties:
+      address:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.RestaurantRegisterResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  entity.Cart:
+    properties:
+      amount:
+        type: integer
+      cartSerial:
+        type: string
+      createdAt:
+        type: string
+      menuSerial:
+        type: string
+      orderSerial:
+        type: string
+      totalPrice:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  entity.Menu:
+    properties:
+      createdAt:
+        type: string
+      menuSerial:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      restaurantSerial:
+        type: string
+      stock:
+        type: integer
+      type:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  entity.Order:
+    properties:
+      createdAt:
+        type: string
+      customerSerial:
+        type: string
+      orderSerial:
+        type: string
+      orderStatus:
+        type: string
+      restaurantSerial:
+        type: string
+      totalPrice:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  order_repository.OrderHistory:
+    properties:
+      carts:
+        items:
+          $ref: '#/definitions/entity.Cart'
+        type: array
+      order:
+        $ref: '#/definitions/entity.Order'
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/customer-login:
+    post:
+      consumes:
+      - application/json
+      description: Customer login endpoint
+      operationId: customer-login
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CustomerLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CustomerLoginResponse'
+      tags:
+      - customers
+  /auth/customer-register:
+    post:
+      consumes:
+      - application/json
+      description: Customer register endpoint
+      operationId: customer-register
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CustomerRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.CustomerRegisterResponse'
+      tags:
+      - customers
+  /auth/restaurant-Login:
+    post:
+      consumes:
+      - application/json
+      description: Restaurant Login endpoint
+      operationId: restaurant-login
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RestaurantLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.RestaurantLoginResponse'
+      tags:
+      - restaurants
+  /auth/restaurant-register:
+    post:
+      consumes:
+      - application/json
+      description: Restaurant register endpoint
+      operationId: restaurant-register
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RestaurantRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.RestaurantRegisterResponse'
+      tags:
+      - restaurants
+  /menu:
+    get:
+      description: Get all menu data endpoint
+      operationId: get-menus
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Menu'
+            type: array
+      tags:
+      - menus
+    post:
+      consumes:
+      - application/json
+      description: This is used by restaurants to add a menu data for them
+      operationId: create-menu
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the restaurant token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateMenuRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.CreateMenuResponse'
+      tags:
+      - menus
+  /menu/my-menus:
+    get:
+      description: This is used by restaurants to get all of their menu data
+      operationId: get-menu-by-restaurant-serial
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the restaurant token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.GetMenusByRestaurantSerialResponse'
+            type: array
+      tags:
+      - menus
+  /order:
+    post:
+      consumes:
+      - application/json
+      description: This is used by customers to create their order data
+      operationId: create-order
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the customer token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/dto.CreateOrderRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.CreateOrderResponse'
+      tags:
+      - orders
+  /order/customer/history:
+    get:
+      consumes:
+      - application/json
+      description: This is used by customers to get their order history data
+      operationId: get-customer-order-history
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the customer token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/order_repository.OrderHistory'
+            type: array
+      tags:
+      - orders
+  /order/purchase:
+    put:
+      consumes:
+      - application/json
+      description: This is used by customers to purchase their order data
+      operationId: purchase-orders
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the customer token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PurchaseOrderRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.PurchaseOrderResponse'
+      tags:
+      - orders
+  /order/restaurant/history:
+    get:
+      consumes:
+      - application/json
+      description: This is used by restaurants to get their purchase history data
+      operationId: get-restaurant-purchase-history-by-month-and-year
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert the restaurant token here
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: month query
+        in: query
+        name: month
+        required: true
+        type: integer
+      - description: year query
+        in: query
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.PurchaseHistoryResponse'
+            type: array
+      tags:
+      - orders
+swagger: "2.0"

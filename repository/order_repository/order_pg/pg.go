@@ -3,6 +3,7 @@ package order_pg
 import (
 	"database/sql"
 	"fmt"
+	"restaurant-service/dto"
 	"restaurant-service/entity"
 	"restaurant-service/pkg/errs"
 	"restaurant-service/repository/order_repository"
@@ -229,3 +230,47 @@ func (o *orderPG) CreateOrder(carts []*entity.Cart, order *entity.Order) errs.Me
 	return nil
 }
 
+
+func (o *orderPG) GetRestaurantPurchaseHistoryByMonthAndYear(restaurantSerial string, month uint8, year uint32) ([]dto.PurchaseHistoryResponse, errs.MessageErr){
+	const getPurchaseHistoryByWeekAndYearQuery = `
+	SELECT cart_serial, c.order_serial as order_serial, c.menu_serial as menu_serial, m.restaurant_serial as restaurant_serial, m.name as menu_name, c.total_price as total_price, amount, c.created_at as created_at, cust.username as customer_username from carts as c
+	LEFT JOIN  menus as m ON m.menu_serial = c.menu_serial 
+	LEFT JOIN  orders as o ON o.order_serial = c.order_serial
+	LEFT JOIN  customers as cust ON cust.customer_serial = o.customer_serial
+	WHERE restaurant_serial = $1 AND EXTRACT(MONTH FROM c.created_at) = $2 AND EXTRACT(YEAR FROM c.created_at) = $3;
+	`
+
+	var purchaseHistories = []order_repository.PurchaseHistory{}
+	var purchaseHistory = order_repository.PurchaseHistory{}
+
+	rows, err := o.db.Query(getPurchaseHistoryByWeekAndYearQuery, restaurantSerial, month, year)
+
+	if err != nil {
+		return nil, errs.NewInternalServerErrorr("something went wrong")
+	}
+
+	for rows.Next(){
+		err = rows.Scan(&purchaseHistory.Cart.CartSerial, 
+			&purchaseHistory.Cart.OrderSerial, 
+			&purchaseHistory.Menu.MenuSerial, 
+			&purchaseHistory.Menu.RestaurantSerial,
+			&purchaseHistory.Menu.Name,
+			&purchaseHistory.Cart.TotalPrice,
+			&purchaseHistory.Cart.Amount,
+			&purchaseHistory.Cart.CreatedAt,
+			&purchaseHistory.Customer.Username,
+		)
+
+		if err != nil {
+			return nil, errs.NewInternalServerErrorr("something went wrong")
+		}
+
+		purchaseHistories = append(purchaseHistories, purchaseHistory)
+	}
+
+
+	response := purchaseHistory.ToPurchaseHistoryResponseDTO(purchaseHistories)
+
+	return response, nil
+
+}

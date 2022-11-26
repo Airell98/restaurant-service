@@ -97,5 +97,29 @@ func (m *menuPG) CreateMenu(menu *entity.Menu) errs.MessageErr {
 
 
 
+func (m *menuPG) GetMenus() ([]*entity.Menu, errs.MessageErr) {
+	const getMenusQuery = `SELECT menu_serial, name, type, stock, price, restaurant_serial, created_at, updated_at from menus ORDER BY created_at ASC;`
+
+	var menus = []*entity.Menu{}
+
+	rows, err := m.db.Query(getMenusQuery)
+
+	if err != nil {
+		return nil,errs.NewInternalServerErrorr("something went wrong")
+	}
 
 
+	for rows.Next() {
+		var menu entity.Menu
+
+		err = rows.Scan(&menu.MenuSerial, &menu.Name, &menu.Type, &menu.Stock, &menu.Price, &menu.RestaurantSerial, &menu.CreatedAt, &menu.UpdatedAt)
+
+		if err != nil {
+			return nil,errs.NewInternalServerErrorr("something went wrong")
+		}
+		menus = append(menus, &menu)
+	}
+
+	return menus, nil
+
+}

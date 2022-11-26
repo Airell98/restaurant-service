@@ -2,6 +2,7 @@ package entity
 
 import (
 	"errors"
+	"os"
 	"restaurant-service/pkg/errs"
 	"strings"
 	"time"
@@ -11,7 +12,6 @@ import (
 )
 
 
-var secret_key = "RAHASIA"
 
 type Customer struct {
 	CustomerSerial string `json:"customerSerial"`
@@ -48,7 +48,7 @@ func (c *Customer) claimsForAccessToken() jwt.MapClaims {
 
 func (u *Customer) signToken(claims jwt.MapClaims) string {
 	parseToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, _ := parseToken.SignedString([]byte(secret_key))
+	signedToken, _ := parseToken.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	return signedToken
 }
 
@@ -96,7 +96,7 @@ func (c *Customer) ParseToken(stringToken string) (*jwt.Token, error) {
 			return nil, errors.New("invalid token");
 		}
 
-		return []byte(secret_key), nil
+		return []byte(os.Getenv("SECRET_KEY")), nil
 	})
 
 	if err != nil {

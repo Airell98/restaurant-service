@@ -14,6 +14,7 @@ type OrderService interface {
 	CreateOrder(customerSerial string,ordersPayload []dto.CreateOrderRequest) (*dto.CreateOrderResponse, errs.MessageErr)
 	PurchaseOrder(orderPayload *dto.PurchaseOrderRequest) (*dto.PurchaseOrderResponse, errs.MessageErr)
 	GetCustomerOrderHistory(customerSerial string) ([]order_repository.OrderHistory , errs.MessageErr)
+	GetRestaurantPurchaseHistoryByMonthAndYear(restaurantSerial string,purchaseHistoryRequest *dto.PurchaseHistoryRequest) ([]dto.PurchaseHistoryResponse, errs.MessageErr)
 }
 
 
@@ -175,3 +176,18 @@ func (o *orderService) PurchaseOrder(orderPayload *dto.PurchaseOrderRequest) (*d
 }
 
 
+func (o *orderService) GetRestaurantPurchaseHistoryByMonthAndYear(restaurantSerial string,purchaseHistoryRequest *dto.PurchaseHistoryRequest) ([]dto.PurchaseHistoryResponse, errs.MessageErr) {
+	err := helpers.ValidateStruct(purchaseHistoryRequest)
+
+	if err != nil {
+		return nil , err
+	}
+
+	response, err := o.orderRepo.GetRestaurantPurchaseHistoryByMonthAndYear(restaurantSerial, purchaseHistoryRequest.Month, purchaseHistoryRequest.Year)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}

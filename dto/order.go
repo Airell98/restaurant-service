@@ -1,5 +1,7 @@
 package dto
 
+import "time"
+
 
 
 type CreateOrderRequest struct {
@@ -34,3 +36,19 @@ type PurchaseOrderResponse struct {
 }
 
 
+type PurchaseHistoryRequest struct {
+	Month uint8 `json:"month" valid:"range(1|12)~month has to be in the range of 1 - 12"`
+	Year uint32 `json:"year" valid:"required~year cannot be empty"`
+}
+
+type PurchaseHistoryResponse struct {
+	CartSerial string `json:"cartSerial"`
+	OrderSerial string `json:"orderSerial"`
+	MenuSerial string `json:"menuSerial"`
+	RestaurantSerial string `json:"restaurantSerial"`
+	MenuName string `json:"menuName"`
+	TotalPrice int32 `json:"totalPrice"`
+	Amount int32 `json:"amount"`
+	CustomerName string `json:"customerName"`
+	CreatedAt time.Time `json:"createdAt"`
+}

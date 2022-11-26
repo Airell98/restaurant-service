@@ -1,20 +1,20 @@
 package helpers
 
 import (
+	"restaurant-service/pkg/errs"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
+func GetQueryParam(c *gin.Context,key string)(int, errs.MessageErr) {
+	value := c.Query(key)
 
-func GetParamId(c *gin.Context,key string) (int, error) {
-	value := c.Param(key)
-
-	id, err := strconv.Atoi(value)
+	data, err := strconv.Atoi(value)
 
 	if err != nil {
-		return 0, err
+		return 0, errs.NewBadRequest("invalid params")
 	}
 
-	return id, nil
+	return data, nil
 }

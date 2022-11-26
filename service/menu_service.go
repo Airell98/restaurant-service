@@ -12,6 +12,7 @@ import (
 type MenuService interface {
 	CreateMenu(restaurantSerial string,menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr)
 	GetMenusByRestaurantSerial(restaurantSerial string) ([]*dto.GetMenusByRestaurantSerialResponse, errs.MessageErr )
+	GetMenus() ([]*entity.Menu, errs.MessageErr)
 }
 
 
@@ -41,7 +42,7 @@ func (m *menuService) GetMenusByRestaurantSerial(restaurantSerial string) ([]*dt
 }
 
 
-func (m *menuService) CreateMenu(restaurantSerial string,menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr) {
+func (m *menuService) CreateMenu(restaurantSerial string, menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr) {
 	err := helpers.ValidateStruct(menuPayload)
 
 	if err != nil {
@@ -55,6 +56,7 @@ func (m *menuService) CreateMenu(restaurantSerial string,menuPayload *dto.Create
 		Stock: menuPayload.Stock,
 		Price: menuPayload.Price,
 		RestaurantSerial: restaurantSerial,
+		Name: menuPayload.Name,
 	}
 
 	err = m.menuRepo.CreateMenu(menu)
@@ -67,4 +69,15 @@ func (m *menuService) CreateMenu(restaurantSerial string,menuPayload *dto.Create
 		Messsage: "your menu has been successfully created",
 	}
 	return response, nil
+}
+
+
+func (m *menuService) GetMenus() ([]*entity.Menu, errs.MessageErr) {
+	menus, err := m.menuRepo.GetMenus()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return menus, nil
 }
