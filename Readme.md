@@ -1,9 +1,16 @@
 # Restaurant Service
 
+
+# REST API Documentation On Swagger
+
+```
+https://restaurant-service-production.up.railway.app/swagger/index.html
+```
+
 # Diagram Link
 
 ```
-https://app.diagrams.net/#G1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP
+https://drive.google.com/file/d/1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP/view
 ```
 
 # Stacks/Packages
@@ -14,6 +21,8 @@ gin gonic: This package is used to create the handlers for th Rest API
 JWT: This package is used to authenticate all the users on this app
 
 bcrypt: This package is used to encrypt all user passwords
+
+swagger: This package is used to create the API Docs
 
 ```
 
@@ -27,10 +36,12 @@ run cd restaurant-service
 
 run go mod tidy
 
-create a postgres database
+create a postgres database on your local system
 
-edit the database config that exist inside the database folder/database package until it suits your needs
+create a .env file and please do kindly follow all the fields that have been given on the .env.example file
 
-run go run main.go
+once you have follow all the fields for your .env file, fill in the values according to your own config
+
+to run the app, run this command => `make server`
 
 ```
