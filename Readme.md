@@ -1,5 +1,12 @@
 # Restaurant Service
 
+
+# REST API Documentation On Swagger
+
+```
+https://restaurant-service-production.up.railway.app/swagger/index.html
+```
+
 # Diagram Link
 
 ```
@@ -29,8 +36,10 @@ run go mod tidy
 
 create a postgres database
 
-edit the database config that exist inside the database folder/database package until it suits your needs
+create a .env file and please do kindly follow all the fields that have been given on the .env.example file
 
-run go run main.go
+once you have follow all the fields for your .env file, fill in the values according to you own config
+
+to run the app, run this command => `make server`
 
 ```
