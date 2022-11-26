@@ -17,6 +17,7 @@ type AuthService interface {
 	RestaurantRegister(restaurantPayload *dto.RestaurantRegisterRequest) (*dto.RestaurantRegisterResponse,  errs.MessageErr)
 	RestaurantLogin(restaurantPayload *dto.RestaurantLoginRequest) (*dto.RestaurantLoginResponse,  errs.MessageErr)
 	RestaurantAuthentication() gin.HandlerFunc
+	CustomerAuthentication() gin.HandlerFunc
 }
 
 

@@ -4,17 +4,13 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/lib/pq"
 )
 
 var (
-	username = "ruangguru"
-	password = ""
-	dbDriver= "postgres"
-	dbPort = "5432"
-	dbName = "restaurant-service-db"
-	host = "localhost"
+
 	db *sql.DB
 	err error
 )
@@ -108,16 +104,23 @@ CREATE TABLE IF NOT EXISTS menus (
 	}
 }
 
+
+
 func InitializeDB() {
+
+	username := os.Getenv("PGUSER")
+	password := os.Getenv("PGPASSWORD")
+	host := os.Getenv("PGHOST")
+	dbName := 	os.Getenv("PGDATABASE")
+	dbPort := os.Getenv("PGPORT")
+
 	dsn := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable",  username, password, host,  dbPort, dbName,)
 
-	db, err = sql.Open(dbDriver, dsn)
+	db, err = sql.Open("postgres", dsn)
 
-	
 	if err != nil {
 		log.Fatal("error connecting to database",err.Error())
 	}
-
 
 	err = db.Ping()
 

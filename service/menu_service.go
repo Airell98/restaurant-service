@@ -10,7 +10,7 @@ import (
 
 
 type MenuService interface {
-	CreateMenu(menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr)
+	CreateMenu(restaurantSerial string,menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr)
 	GetMenusByRestaurantSerial(restaurantSerial string) ([]*dto.GetMenusByRestaurantSerialResponse, errs.MessageErr )
 }
 
@@ -41,7 +41,7 @@ func (m *menuService) GetMenusByRestaurantSerial(restaurantSerial string) ([]*dt
 }
 
 
-func (m *menuService) CreateMenu(menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr) {
+func (m *menuService) CreateMenu(restaurantSerial string,menuPayload *dto.CreateMenuRequest) (*dto.CreateMenuResponse, errs.MessageErr) {
 	err := helpers.ValidateStruct(menuPayload)
 
 	if err != nil {
@@ -54,7 +54,7 @@ func (m *menuService) CreateMenu(menuPayload *dto.CreateMenuRequest) (*dto.Creat
 		Type: entity.MenuType(menuPayload.Type),
 		Stock: menuPayload.Stock,
 		Price: menuPayload.Price,
-		RestaurantSerial: menuPayload.RestaurantSerial,
+		RestaurantSerial: restaurantSerial,
 	}
 
 	err = m.menuRepo.CreateMenu(menu)

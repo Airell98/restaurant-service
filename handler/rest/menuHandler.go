@@ -46,10 +46,7 @@ func (m menuRestHandler) CreateMenu(c *gin.Context) {
 		return
 	}
 
-
-	menu.RestaurantSerial = restaurantData.RestaurantSerial
-	
-	successRes, err := m.service.CreateMenu(&menu)
+	successRes, err := m.service.CreateMenu(restaurantData.RestaurantSerial,&menu)
 
 	if err != nil {
 		c.JSON(err.Status(), err)

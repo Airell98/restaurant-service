@@ -3,6 +3,7 @@ package rest
 import (
 	"net/http"
 	"restaurant-service/dto"
+	"restaurant-service/entity"
 	"restaurant-service/pkg/errs"
 	"restaurant-service/service"
 
@@ -23,15 +24,14 @@ func newOrderHandler(orderService service.OrderService)orderRestHandler {
 
 func (o orderRestHandler) CreateOrder(c *gin.Context) {
 	var orders []dto.CreateOrderRequest
-
-	// customerData :=  c.MustGet("customerData").(entity.Customer)
+	customerData :=  c.MustGet("customerData").(entity.Customer)
 
 	if err := c.ShouldBindJSON(&orders); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, errs.NewUnprocessibleEntityError())
 		return
 	}
 
-	successRes, err := o.service.CreateOrder("CST-JTONGM", orders)
+	successRes, err := o.service.CreateOrder(customerData.CustomerSerial , orders)
 
 
 	if err != nil {
@@ -44,9 +44,10 @@ func (o orderRestHandler) CreateOrder(c *gin.Context) {
 
 
 func (o orderRestHandler) GetCustomerOrderHistory(c *gin.Context) {
-	s := "CST-JTONGM"
+	customerData :=  c.MustGet("customerData").(entity.Customer)
 
-	successRes, err := o.service.GetCustomerOrderHistory(s)
+
+	successRes, err := o.service.GetCustomerOrderHistory(customerData.CustomerSerial)
 
 	if err != nil {
 		c.JSON(err.Status(), err)

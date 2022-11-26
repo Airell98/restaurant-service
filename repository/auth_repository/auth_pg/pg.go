@@ -2,7 +2,6 @@ package auth_pg
 
 import (
 	"database/sql"
-	"fmt"
 	"restaurant-service/entity"
 	"restaurant-service/pkg/errs"
 	"restaurant-service/repository/auth_repository"
@@ -100,7 +99,6 @@ func (a *authPG) RestaurantRegister (restaurant *entity.Restaurant)  errs.Messag
 _, err := a.db.Exec(createRestaurantQuery, restaurant.RestaurantSerial, restaurant.Username, restaurant.Password, restaurant.Address)
 
 if err != nil {
-	fmt.Println("err =>",err)
 	return errs.NewInternalServerErrorr("something went wrong")
 }
 

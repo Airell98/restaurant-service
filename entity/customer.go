@@ -49,7 +49,6 @@ func (c *Customer) claimsForAccessToken() jwt.MapClaims {
 func (u *Customer) signToken(claims jwt.MapClaims) string {
 	parseToken := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, _ := parseToken.SignedString([]byte(secret_key))
-
 	return signedToken
 }
 
@@ -65,16 +64,18 @@ func (c *Customer) ComparePassword(userPassword string) bool {
 }
 
 func (c *Customer) bindTokenDataToCustomerEntity(mapClaims jwt.MapClaims) error {
+
 	if v, ok := mapClaims["serial"].(string); !ok {
 			return  errors.New("invalid token");
 	}else {
+	
 		c.CustomerSerial = v
 	}
 
 	if v, ok := mapClaims["username"].(string); !ok {
 		return  errors.New("invalid token");
 	}else {
-		c.CustomerSerial = v
+		c.Username = v
 	}
 
 	if v, ok := mapClaims["role"].(string); !ok {
@@ -82,6 +83,8 @@ func (c *Customer) bindTokenDataToCustomerEntity(mapClaims jwt.MapClaims) error 
 	}else {
 		c.Role = v
 	}
+
+	
 
 	return nil
 }

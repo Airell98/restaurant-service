@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"os"
 	"restaurant-service/database"
 	"restaurant-service/repository/auth_repository/auth_pg"
 	"restaurant-service/repository/menu_repository/menu_pg"
@@ -11,9 +12,10 @@ import (
 )
 
 
-const port = ":8080"
+
 
 func StartApp() {
+	var port = os.Getenv("PORT")
 	database.InitializeDB()
 
 	db := database.GetDB()
@@ -54,9 +56,10 @@ func StartApp() {
 
 	orderRoute := route.Group("/order")
 	{
-		orderRoute.POST("/", orderHandler.CreateOrder)
-		orderRoute.PUT("/purchase", orderHandler.PurchaseOrders);
-		orderRoute.GET("/history", orderHandler.GetCustomerOrderHistory)
+		
+		orderRoute.POST("/", authService.CustomerAuthentication(),  orderHandler.CreateOrder)
+		orderRoute.PUT("/purchase", authService.CustomerAuthentication(),orderHandler.PurchaseOrders);
+		orderRoute.GET("/history", authService.CustomerAuthentication(), orderHandler.GetCustomerOrderHistory)
 	}
 
 	route.Run(port)

@@ -51,15 +51,26 @@ func (o *orderPG) GetCustomerOrderHistory(customerSerial string) ([]order_reposi
 
 		orderHistories = append(orderHistories, order)
 	}
-
 	for i, eachOrder := range orderHistories {
-		var cart = entity.Cart{}
-		row := o.db.QueryRow(getCartByQuery, eachOrder.Order.OrderSerial)
-		err := row.Scan(&cart.CartSerial, &cart.OrderSerial, &cart.MenuSerial, &cart.Amount, &cart.TotalPrice, &cart.CreatedAt, &cart.UpdatedAt)
+		var carts = []entity.Cart{}
+		rows, err = o.db.Query(getCartByQuery, eachOrder.Order.OrderSerial)
 
-		if err == nil {
-			orderHistories[i].Carts = append(orderHistories[i].Carts, cart)
+		if err != nil {
+			return nil, errs.NewInternalServerErrorr("something went wrong")
 		}
+		for rows.Next() {
+			var cart = entity.Cart{}
+
+			err = rows.Scan(&cart.CartSerial, &cart.OrderSerial, &cart.MenuSerial, &cart.Amount, &cart.TotalPrice, &cart.CreatedAt, &cart.UpdatedAt)
+
+			if err != nil {
+				return nil, errs.NewInternalServerErrorr("something went wrong")
+			}
+
+			carts = append(carts, cart)
+		}
+
+		orderHistories[i].Carts = append(orderHistories[i].Carts, carts...)
 	}
 	return orderHistories, nil
 }

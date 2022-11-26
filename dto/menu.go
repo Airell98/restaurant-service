@@ -4,10 +4,9 @@ import "time"
 
 
 type CreateMenuRequest struct {
-	Type string`json:"type"`
+	Type string`json:"type" valid:"required~type cannot be empty"`
 	Stock int32 `json:"stock"`
 	Price int32 `json:"price"`
-	RestaurantSerial string `json:"restaurantSerial"`
 }
 
 
