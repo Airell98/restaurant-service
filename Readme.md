@@ -10,7 +10,7 @@ https://restaurant-service-production.up.railway.app/swagger/index.html
 # Diagram Link
 
 ```
-https://app.diagrams.net/#G1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP
+https://drive.google.com/file/d/1ZGZlXEZUR-8MtbJmcaSlEWXoPC_HbyhP/view
 ```
 
 # Stacks/Packages
