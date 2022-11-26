@@ -234,7 +234,7 @@ paths:
             $ref: '#/definitions/dto.CustomerRegisterResponse'
       tags:
       - customers
-  /auth/restaurant-Login:
+  /auth/restaurant-login:
     post:
       consumes:
       - application/json

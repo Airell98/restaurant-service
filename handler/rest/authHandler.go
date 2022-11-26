@@ -115,7 +115,7 @@ func (a authRestHandler) RestaurantRegister(c *gin.Context) {
 // @Produce json
 // @Param RequestBody body dto.RestaurantLoginRequest true "request body json"
 // @Success 200 {object} dto.RestaurantLoginResponse
-// @Router /auth/restaurant-Login [post]
+// @Router /auth/restaurant-login [post]
 func (a authRestHandler) RestaurantLogin(c *gin.Context) {
 	var restaurant dto.RestaurantLoginRequest
 

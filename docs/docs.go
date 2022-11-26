@@ -84,7 +84,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/auth/restaurant-Login": {
+        "/auth/restaurant-login": {
             "post": {
                 "description": "Restaurant Login endpoint",
                 "consumes": [
